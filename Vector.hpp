@@ -1,20 +1,262 @@
 #pragma once
 
-#ifndef _VECTOR3_
-#define _VECTOR3_
+#ifndef _VECTOR2_3_
+#define _VECTOR2_3_
 
 #include <ostream>
 #include <cmath>
 
+template <typename TYPE = double> struct Vector2;
+template <typename TYPE = double> struct Vector3;
+
+template <typename TYPE = double> struct Vector2
+{
+	TYPE x, y;
+
+	constexpr Vector2() { }
+
+	constexpr Vector2(const TYPE _x, const TYPE _y) :x(_x), y(_y) { }
+
+	constexpr Vector2(const Vector2<TYPE>& _vec) : x(_vec.x), y(_vec.y) { }
+
+	constexpr Vector2(const Vector3<TYPE>& _vec) : x(_vec.x), y(_vec.y) { }
+
+	constexpr void Set(const TYPE _x, const TYPE _y)
+	{
+		x = _x;
+		y = _y;
+	}
+
+	constexpr void SetAll(const TYPE _v)
+	{
+		x = _v;
+		y = _v;
+	}
+
+	constexpr Vector2<TYPE> Sqrt()
+	{
+		return Vector2<TYPE>((TYPE)sqrt(x), (TYPE)sqrt(y));
+	}
+
+	constexpr Vector2<TYPE> Pow(const double _pow)
+	{
+		return Vector2<TYPE>((TYPE)pow(x, _pow), (TYPE)pow(y, _pow));
+	}
+
+	constexpr bool IsZero()
+	{
+		return !(x || y);
+	}
+
+	//----------------- | =
+
+	Vector2<TYPE>& operator=(const Vector2<TYPE>& _vec)
+	{
+		x = _vec.x;
+		y = _vec.y;
+		return *this;
+	}
+
+	bool operator==(const Vector2<TYPE>& _vec)
+	{
+		if (x == _vec.x && y == _vec.y)
+			return true;
+		else
+			return false;
+	}
+
+	bool operator!=(const Vector2<TYPE>& _vec)
+	{
+		if (x == _vec.x && y == _vec.y)
+			return false;
+		else
+			return true;
+	}
+
+	//-----------------| +
+
+	Vector2<TYPE>& operator+(const Vector2<TYPE>& _vec)
+	{
+		x += _vec.x;
+		y += _vec.y;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator+(const TYPE& _size)
+	{
+		x += _size;
+		y += _size;
+		return *this;
+	}
+
+	//-----------------| ++
+
+	Vector2<TYPE>& operator++()
+	{
+		x += 1;
+		y += 1;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator++(int)
+	{
+		Vector2<TYPE> orig = *this;
+		++(*this);
+		return orig;
+	}
+
+	//-----------------| +=
+
+	Vector2<TYPE>& operator+=(const TYPE& _size)
+	{
+		x += _size;
+		y += _size;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator+=(const Vector2<TYPE>& _vec)
+	{
+		x += _vec.x;
+		y += _vec.y;
+		return *this;
+	}
+
+	//-----------------| -
+
+	Vector2<TYPE>& operator-(const Vector2<TYPE>& _vec)
+	{
+		x -= _vec.x;
+		y -= _vec.y;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator-(const TYPE& _size)
+	{
+		x -= _size;
+		y -= _size;
+		return *this;
+	}
+
+	//-----------------| --
+
+	Vector2<TYPE>& operator--()
+	{
+		x -= 1;
+		y -= 1;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator--(int)
+	{
+		Vector2<TYPE> orig = *this;
+		--(*this);
+		return orig;
+	}
+
+	//-----------------| -=
+
+	Vector2<TYPE>& operator-=(const TYPE& _size)
+	{
+		x -= _size;
+		y -= _size;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator-=(const Vector2<TYPE>& _vec)
+	{
+		x -= _vec.x;
+		y -= _vec.y;
+		return *this;
+	}
+
+	//-----------------| *
+
+	Vector2<TYPE>& operator*(const TYPE& _size)
+	{
+		x *= _size;
+		y *= _size;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator*(const Vector2<TYPE>& _vec)
+	{
+		x *= _vec.x;
+		y *= _vec.y;
+		return *this;
+	}
+
+	//-----------------| *=
+
+	Vector2<TYPE>& operator*=(const TYPE& _size)
+	{
+		x *= _size;
+		y *= _size;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator*=(const Vector2<TYPE>& _vec)
+	{
+		x *= _vec.x;
+		y *= _vec.y;
+		return *this;
+	}
+
+	//-----------------| /
+
+	Vector2<TYPE>& operator/(const TYPE& _size)
+	{
+		if (x)
+			x /= _size;
+		if (y)
+			y /= _size;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator/(const Vector2<TYPE>& _vec)
+	{
+		if (x)
+			x /= _vec.x;
+		if (y)
+			y /= _vec.y;
+		return *this;
+	}
+
+	//-----------------| /=
+
+	Vector2<TYPE>& operator/=(const TYPE& _size)
+	{
+		if (x)
+			x /= _size;
+		if (y)
+			y /= _size;
+		return *this;
+	}
+
+	Vector2<TYPE>& operator/=(const Vector2<TYPE>& _vec)
+	{
+		if (x)
+			x /= _vec.x;
+		if (y)
+			y /= _vec.y;
+		return *this;
+	}
+};
+
+template <typename TYPE> std::ostream& operator<<(std::ostream& out, const Vector2<TYPE>& _vec) {
+	return out << _vec.x << "," << _vec.y;
+}
+
 template <typename TYPE = double> struct Vector3
 {
-	TYPE x { }, y { }, z { };
-	
+	TYPE x, y, z;
+
 	constexpr Vector3() { }
 
 	constexpr Vector3(const TYPE _x, const TYPE _y, const TYPE _z) :x(_x), y(_y), z(_z) { }
 
 	constexpr Vector3(const Vector3<TYPE>& _vec) :x(_vec.x), y(_vec.y), z(_vec.z) { }
+	
+	constexpr Vector3(const Vector2<TYPE>& _vec) :x(_vec.x), y(_vec.y), z(NULL) { }
 
 	constexpr void Set(const TYPE _x, const TYPE _y, const TYPE _z)
 	{
@@ -35,7 +277,7 @@ template <typename TYPE = double> struct Vector3
 		return Vector3<TYPE>((TYPE)sqrt(x), (TYPE)sqrt(y), (TYPE)sqrt(z));
 	}
 
-	constexpr Vector3<TYPE> Pow(const int _pow)
+	constexpr Vector3<TYPE> Pow(const double _pow)
 	{
 		return Vector3<TYPE>((TYPE)pow(x, _pow), (TYPE)pow(y, _pow), (TYPE)pow(z, _pow));
 	}
