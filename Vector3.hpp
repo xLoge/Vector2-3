@@ -6,7 +6,7 @@
 #include <ostream>
 #include <cmath>
 
-template <typename TYPE> struct Vector3
+template <typename TYPE = double> struct Vector3
 {
 	TYPE x { }, y { }, z { };
 	
