@@ -6,11 +6,10 @@
 #include <ostream>
 #include <cmath>
 
-template <typename TYPE = double> struct Vector2;
-template <typename TYPE = double> struct Vector3;
-
 template <typename TYPE = double> struct Vector2
 {
+	template <typename TYPE = double> struct Vector3;
+
 	TYPE x, y;
 
 	constexpr Vector2() { }
@@ -240,6 +239,17 @@ template <typename TYPE = double> struct Vector2
 			y /= _vec.y;
 		return *this;
 	}
+
+	//-----------------| []
+
+	constexpr TYPE operator[](const int _indx)
+	{
+		if (_indx == 0)
+			return x;
+		if (_indx == 1)
+			return y;
+		return NULL;
+	}
 };
 
 template <typename TYPE> std::ostream& operator<<(std::ostream& out, const Vector2<TYPE>& _vec) {
@@ -248,6 +258,8 @@ template <typename TYPE> std::ostream& operator<<(std::ostream& out, const Vecto
 
 template <typename TYPE = double> struct Vector3
 {
+	template <typename TYPE = double> struct Vector2;
+
 	TYPE x, y, z;
 
 	constexpr Vector3() { }
@@ -501,6 +513,19 @@ template <typename TYPE = double> struct Vector3
 		if (z)
 			z /= _vec.z;
 		return *this;
+	}
+
+	//-----------------| []
+
+	constexpr TYPE operator[](const int _indx)
+	{
+		if (_indx == 0)
+			return x;
+		if (_indx == 1)
+			return y;
+		if (_indx == 2)
+			return z;
+		return NULL;
 	}
 };
 
